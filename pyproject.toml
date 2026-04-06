@@ -1,14 +1,35 @@
 [project]
-name = "tookit2"
-version = "0.1.0"
-description = "Add your description here"
+name = "jutils"
+version = "1.0.0"
+description = "Bioinformatics and phenotype analysis toolkit"
 readme = "README.md"
-requires-python = ">=3.14"
-dependencies = [
-    "biopython>=1.87",
-    "matplotlib>=3.10.8",
-    "numpy>=2.4.4",
-    "opencv-python>=4.13.0.92",
-    "pandas>=3.0.2",
-    "pillow>=12.2.0",
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Jiaoyuan", email = "your.email@example.com"}
 ]
+
+dependencies = [
+    "biopython>=1.80",
+    "matplotlib>=3.5",
+    "numpy>=1.20",
+    "opencv-python>=4.5",
+    "pandas>=1.3",
+    "pillow>=9.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "black>=22.0", "ruff>=0.1"]
+
+[project.scripts]
+jutils = "cli:main"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["cli", "common", "seq", "plot", "analyze", "pheno"]
+
+[tool.setuptools.package-dir]
+"" = "src"
