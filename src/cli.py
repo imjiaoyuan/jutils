@@ -4,7 +4,7 @@ import seq, plot, analyze, pheno
 
 def main():
     parser = argparse.ArgumentParser(
-        prog='jutils',
+        prog='jsrc',
         description='Bioinformatics and phenotype analysis toolkit'
     )
     parser.add_argument('--version', action='version', version='1.0.0')

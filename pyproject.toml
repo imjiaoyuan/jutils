@@ -1,5 +1,5 @@
 [project]
-name = "jutils"
+name = "jsrc"
 version = "1.0.0"
 description = "Bioinformatics and phenotype analysis toolkit"
 readme = "README.md"
@@ -22,7 +22,7 @@ dependencies = [
 dev = ["pytest>=7.0", "black>=22.0", "ruff>=0.1"]
 
 [project.scripts]
-jutils = "cli:main"
+jsrc = "cli:main"
 
 [build-system]
 requires = ["setuptools>=61.0", "wheel"]
