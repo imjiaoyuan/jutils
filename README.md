@@ -4,16 +4,34 @@ Bioinformatics analysis toolkit with modular subcommands.
 
 ## Installation
 
+Use **uv** (recommended):
+
 ```bash
-pip install jsrc
+# 1) create env
+uv venv
+
+# 2) install jsrc package
+uv add jsrc
+
+# 3) run
+uv run jsrc --help
 ```
 
-Or install from source:
+Or use pip:
+
+```bash
+pip install jsrc
+jsrc --help
+```
+
+## Local development (quick setup)
 
 ```bash
 git clone https://github.com/imjiaoyuan/jsrc.git
 cd jsrc
-pip install -e .
+uv venv
+uv sync --extra dev
+uv run jsrc --help
 ```
 
 ## Module Layout
@@ -37,6 +55,8 @@ JSRC_DISABLE_MODULES=grn jsrc --help
 ```
 
 ## Commands
+
+Below uses `jsrc ...` for brevity; with uv, run as `uv run jsrc ...`.
 
 ### seq
 
