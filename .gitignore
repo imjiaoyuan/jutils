@@ -1,6 +1,5 @@
 __pycache__/
 *.py[cod]
-*$py.class
 
 .venv/
 venv/
@@ -10,7 +9,5 @@ build/
 dist/
 
 .pytest_cache/
-.mypy_cache/
 .ruff_cache/
-
-.claude/settings.local.json
+temp/*
