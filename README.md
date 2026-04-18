@@ -99,13 +99,10 @@ jsrc analyze motif -fa promoters.fa -o motif_output -nmotifs 5
 
 ```bash
 # Convert GRN edge table to JSON links
-jsrc grn to_json -i grn.tsv -o viewer/json/grn.json -t network
+jsrc grn net2json -i grn.tsv -o viewer/json/grn.json
 
-# Convert annotation table to JSON dictionary
-jsrc grn to_json -i annotation.tsv -o viewer/json/annotation.json -t annotation
-
-# Initialize empty local GRN viewer scaffold
-jsrc grn init -o viewer
+# Convert annotation table to JSON dictionary (optional)
+jsrc grn anno2json -i annotation.tsv -o viewer/json/annotation.json
 
 # Serve local GRN viewer through HTTP
 jsrc grn serve -d viewer -p 8000
