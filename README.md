@@ -1,10 +1,10 @@
 # jsrc
 
-Python library for scientific computing and visualization.
+Python library for bioinformatics and scientific computing.
 
 ## Installation
 
-PyPI (recommended):
+PyPI:
 ```bash
 pip install jsrc
 ```

@@ -1,4 +1,6 @@
-# jsrc Documentation (EN)
+# jsrc
+
+Python library for bioinformatics and scientific computing.
 
 ## Quick Start
 
