@@ -40,3 +40,4 @@ jsrc <module> <subcommand> --help
 ## 参考
 
 - [兼容性策略](./stability.md)
+- [发布清单](../../RELEASE.md)

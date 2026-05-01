@@ -40,3 +40,4 @@ jsrc <module> <subcommand> --help
 ## Reference
 
 - [Stability Policy](./stability.md)
+- [Release Checklist](../../RELEASE.md)
