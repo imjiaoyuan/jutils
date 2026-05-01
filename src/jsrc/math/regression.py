@@ -8,12 +8,10 @@ from jsrc.math.core import (
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     x, y = col_to_float_pair(data, args.col[0], args.col[1])
     if len(x) < 3:
-        print("Error: need at least 3 points")
-        return
+        raise SystemExit("Error: need at least 3 points")
     degree = max(1, args.degree)
     if degree == 1:
         _simple_linear(x, y, args.output)
@@ -29,8 +27,7 @@ def _simple_linear(x, y, output):
     den = sum((a - mx) ** 2 for a in x)
     den2 = sum((b - my) ** 2 for b in y)
     if den == 0:
-        print("Error: constant X")
-        return
+        raise SystemExit("Error: constant X")
     slope = num / den
     intercept = my - slope * mx
     residuals = [b - (intercept + slope * a) for a, b in zip(x, y)]
@@ -90,14 +87,12 @@ def _polynomial(x, y, degree, output):
         m.append(row)
     p = degree + 1
     if n <= p:
-        print(f"Error: need more points than parameters ({n} <= {p})")
-        return
+        raise SystemExit(f"Error: need more points than parameters ({n} <= {p})")
     xtx = [[sum(m[k][i] * m[k][j] for k in range(n)) for j in range(p)] for i in range(p)]
     xty = [sum(m[k][i] * y[k] for k in range(n)) for i in range(p)]
     beta = _cholesky_solve(xtx, xty, p)
     if beta is None:
-        print("Error: singular matrix")
-        return
+        raise SystemExit("Error: singular matrix")
     residuals = [b - sum(beta[i] * m[k][i] for i in range(p)) for k, b in enumerate(y)]
     ss_res = sum(r ** 2 for r in residuals)
     my = mean(y)

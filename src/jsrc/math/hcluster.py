@@ -5,12 +5,10 @@ from jsrc.math.core import parse_columns, write_output
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     feature_cols = [h for h in headers if _is_numeric_col(data, h)]
     if len(feature_cols) < 1:
-        print("Error: no numeric columns")
-        return
+        raise SystemExit("Error: no numeric columns")
     X = []
     labels = []
     for row in data:
@@ -26,8 +24,7 @@ def cmd(args):
             X.append(vec)
             labels.append(str(row.get(headers[0], "")))
     if len(X) < 2:
-        print("Error: need at least 2 points")
-        return
+        raise SystemExit("Error: need at least 2 points")
     clusters = _hcluster(X, args.method)
     lines = [f"linkage\t{args.method}", f"n\t{len(X)}"]
     if args.k:

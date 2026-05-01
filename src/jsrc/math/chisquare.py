@@ -5,22 +5,20 @@ from jsrc.math.core import (
 
 def cmd(args):
     if args.observed and args.col:
-        print("Error: specify either --observed/--expected or --col, not both")
-        return
+        raise SystemExit("Error: specify either --observed/--expected or --col, not both")
     if args.observed:
         _goodness_of_fit(args.observed, args.expected, args.output)
     elif args.col:
         _independence(args.input, args.sep, args.col[0], args.col[1], args.output)
     else:
-        print("Error: specify --observed or --col")
+        raise SystemExit("Error: specify --observed or --col")
 
 
 def _goodness_of_fit(observed, expected, output):
     n = len(observed)
     if expected:
         if len(expected) != n:
-            print(f"Error: observed ({n}) and expected ({len(expected)}) length differ")
-            return
+            raise SystemExit(f"Error: observed ({n}) and expected ({len(expected)}) length differ")
     else:
         total = sum(observed)
         expected = [total / n] * n
@@ -43,8 +41,7 @@ def _goodness_of_fit(observed, expected, output):
 def _independence(filepath, sep, col1, col2, output):
     headers, data = parse_columns(filepath, sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     if col1.isdigit():
         c1 = int(col1)
         col1 = list(data[0].keys())[c1] if data else col1
@@ -65,14 +62,12 @@ def _independence(filepath, sep, col1, col2, output):
     row_levels = sorted(row_levels)
     col_levels = sorted(col_levels)
     if len(row_levels) < 2 or len(col_levels) < 2:
-        print("Error: need at least 2 levels in each dimension")
-        return
+        raise SystemExit("Error: need at least 2 levels in each dimension")
     row_sums = {r: sum(table.get((r, c), 0) for c in col_levels) for r in row_levels}
     col_sums = {c: sum(table.get((r, c), 0) for r in row_levels) for c in col_levels}
     total = sum(row_sums.values())
     if total == 0:
-        print("Error: empty table")
-        return
+        raise SystemExit("Error: empty table")
     chi2 = 0.0
     for r in row_levels:
         for c in col_levels:

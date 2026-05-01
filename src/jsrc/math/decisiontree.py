@@ -7,23 +7,19 @@ def cmd(args):
     train_headers, train_data = parse_columns(args.train)
     test_headers, test_data = parse_columns(args.test)
     if not train_data:
-        print("Error: empty training data")
-        return
+        raise SystemExit("Error: empty training data")
     feature_cols = [h for h in train_headers if h != args.target_col and _is_numeric_col(train_data, h)]
     if not feature_cols:
-        print("Error: no numeric feature columns")
-        return
+        raise SystemExit("Error: no numeric feature columns")
     X, y = _parse_xy(train_data, feature_cols, args.target_col)
     if not X:
-        print("Error: no valid training samples")
-        return
+        raise SystemExit("Error: no valid training samples")
     tree = _build_tree(X, y, args.max_depth, args.min_samples, args.regression)
     if args.print_tree:
         _print_tree(tree, feature_cols)
     X_test, _ = _parse_xy(test_data, feature_cols, args.target_col)
     if not X_test:
-        print("Error: no valid test samples")
-        return
+        raise SystemExit("Error: no valid test samples")
     output_lines = ["prediction"]
     for xt in X_test:
         pred = _predict_one(tree, xt)

@@ -8,8 +8,7 @@ import math
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     cols = args.col
     if len(cols) == 1:
         _one_sample(data, cols[0], args.mu, args.output)
@@ -19,15 +18,14 @@ def cmd(args):
         else:
             _independent(data, cols[0], cols[1], args.equal_var, args.output)
     else:
-        print("Error: specify 1 or 2 columns")
+        raise SystemExit("Error: specify 1 or 2 columns")
 
 
 def _one_sample(data, col, mu, output):
     vals = col_to_float(data, col)
     n = len(vals)
     if n < 2:
-        print("Error: need at least 2 values")
-        return
+        raise SystemExit("Error: need at least 2 values")
     m = mean(vals)
     s = var_s(vals)
     se = (s / n) ** 0.5
@@ -54,8 +52,7 @@ def _independent(data, col1, col2, equal_var, output):
     x, y = col_to_float_pair(data, col1, col2)
     n1, n2 = len(x), len(y)
     if n1 < 2 or n2 < 2:
-        print("Error: need at least 2 values per group")
-        return
+        raise SystemExit("Error: need at least 2 values per group")
     m1, m2 = mean(x), mean(y)
     v1, v2 = var_s(x), var_s(y)
     if equal_var:
@@ -86,8 +83,7 @@ def _independent(data, col1, col2, equal_var, output):
 def _paired(data, col1, col2, output):
     x, y = col_to_float_pair(data, col1, col2)
     if len(x) < 2:
-        print("Error: need at least 2 pairs")
-        return
+        raise SystemExit("Error: need at least 2 pairs")
     diffs = [a - b for a, b in zip(x, y)]
     n = len(diffs)
     m = mean(diffs)

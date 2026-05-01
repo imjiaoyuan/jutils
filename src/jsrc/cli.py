@@ -60,7 +60,11 @@ def main():
         parser.print_help()
         sys.exit(1)
     if hasattr(args, "func"):
-        args.func(args)
+        try:
+            args.func(args)
+        except (FileNotFoundError, ValueError) as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            sys.exit(2)
         return
     group_parser = getattr(args, "_group_parser", None)
     if group_parser is not None:

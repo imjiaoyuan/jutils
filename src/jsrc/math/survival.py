@@ -5,13 +5,11 @@ from jsrc.math.core import parse_columns, col_to_float, write_output, chi2_pvalu
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     time = col_to_float(data, args.time_col)
     event = col_to_float(data, args.event_col)
     if len(time) < 2:
-        print("Error: need at least 2 observations")
-        return
+        raise SystemExit("Error: need at least 2 observations")
     if args.group_col:
         groups = {}
         for row in data:
@@ -54,8 +52,7 @@ def _kaplan_meier(pairs, output):
 
 def _logrank(groups, output):
     if len(groups) < 2:
-        print("Error: need at least 2 groups for Log-rank test")
-        return
+        raise SystemExit("Error: need at least 2 groups for Log-rank test")
     all_times = set()
     for g, pairs in groups.items():
         pairs.sort(key=lambda x: x[0])

@@ -6,12 +6,10 @@ from jsrc.math.core import parse_columns, write_output
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     feature_cols = [h for h in headers if _is_numeric_col(data, h)]
     if len(feature_cols) < 1:
-        print("Error: no numeric columns found")
-        return
+        raise SystemExit("Error: no numeric columns found")
     X = []
     for row in data:
         vec = []
@@ -25,8 +23,7 @@ def cmd(args):
         if ok:
             X.append(vec)
     if len(X) < args.k:
-        print(f"Error: fewer points ({len(X)}) than clusters ({args.k})")
-        return
+        raise SystemExit(f"Error: fewer points ({len(X)}) than clusters ({args.k})")
     clusters, centroids, inertia = _kmeans(X, args.k, args.max_iter)
     lines = [f"k\t{args.k}", f"n\t{len(X)}", f"features\t{len(feature_cols)}",
              f"inertia\t{inertia}", f"iterations\t{args.max_iter}", ""]

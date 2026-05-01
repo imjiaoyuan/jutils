@@ -19,8 +19,7 @@ def cmd(args):
     elif dist == "t":
         df = args.df1
         if df is None:
-            print("Error: --df1 required for t distribution")
-            return
+            raise SystemExit("Error: --df1 required for t distribution")
         cdf_val = t_cdf(x, df)
         log_pdf = (math.lgamma((df + 1) / 2) - math.lgamma(df / 2)
                    - 0.5 * math.log(df * math.pi)
@@ -34,8 +33,7 @@ def cmd(args):
         df1 = args.df1
         df2 = args.df2
         if df1 is None or df2 is None:
-            print("Error: --df1 and --df2 required for F distribution")
-            return
+            raise SystemExit("Error: --df1 and --df2 required for F distribution")
         cdf_val = f_cdf(x, df1, df2)
         lines = [f"distribution\tf", f"x\t{x}", f"df1\t{df1}", f"df2\t{df2}", f"cdf\t{cdf_val}"]
         if args.pdf:
@@ -48,8 +46,7 @@ def cmd(args):
     elif dist == "chi2":
         df = args.df1
         if df is None:
-            print("Error: --df1 required for chi2 distribution")
-            return
+            raise SystemExit("Error: --df1 required for chi2 distribution")
         cdf_val = chi2_cdf(x, df)
         lines = [f"distribution\tchi2", f"x\t{x}", f"df\t{df}", f"cdf\t{cdf_val}"]
         if args.pdf:

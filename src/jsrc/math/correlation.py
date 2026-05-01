@@ -5,12 +5,10 @@ from jsrc.math.core import parse_columns, col_to_float_pair, write_output, t_pva
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     x, y = col_to_float_pair(data, args.col[0], args.col[1])
     if len(x) < 3:
-        print("Error: need at least 3 valid pairs")
-        return
+        raise SystemExit("Error: need at least 3 valid pairs")
     lines = [f"n\t{len(x)}"]
     if args.method in ("pearson", "both"):
         r, p = _pearson(x, y)

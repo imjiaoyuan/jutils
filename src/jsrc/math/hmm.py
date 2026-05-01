@@ -7,14 +7,11 @@ def cmd(args):
     observations = args.observations
     n_states = len(states)
     if len(args.trans_probs) != n_states * n_states:
-        print(f"Error: transition matrix needs {n_states * n_states} values")
-        return
+        raise SystemExit(f"Error: transition matrix needs {n_states * n_states} values")
     if len(args.emit_probs) != n_states * len(set(observations)):
-        print("Error: emission matrix dimensions mismatch")
-        return
+        raise SystemExit("Error: emission matrix dimensions mismatch")
     if len(args.start_probs) != n_states:
-        print(f"Error: start probabilities need {n_states} values")
-        return
+        raise SystemExit(f"Error: start probabilities need {n_states} values")
     obs_set = sorted(set(observations))
     n_obs = len(obs_set)
     obs_map = {o: i for i, o in enumerate(obs_set)}

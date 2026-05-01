@@ -7,12 +7,10 @@ from jsrc.math.core import (
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     groups = col_to_float_grouped(data, args.group_col, args.value_col)
     if len(groups) < 2:
-        print("Error: need at least 2 groups")
-        return
+        raise SystemExit("Error: need at least 2 groups")
     _oneway(groups, args.output)
 
 
@@ -32,8 +30,7 @@ def _oneway(groups, output):
         total_n += n
         grand_sum += sum(vals)
     if len(group_stats) < 2:
-        print("Error: need at least 2 groups with >= 2 values each")
-        return
+        raise SystemExit("Error: need at least 2 groups with >= 2 values each")
     grand_mean = grand_sum / total_n
     ssb = sum(n * (m - grand_mean) ** 2 for _, n, m, _ in group_stats)
     ssw = sum(ss for _, _, _, ss in group_stats)

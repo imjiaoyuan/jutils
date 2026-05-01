@@ -6,12 +6,10 @@ from jsrc.math.core import parse_columns, col_to_float, write_output
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     vals = col_to_float(data, args.col)
     if len(vals) < 2:
-        print("Error: need at least 2 values")
-        return
+        raise SystemExit("Error: need at least 2 values")
     n = len(vals)
     m = mean(vals)
     med = _median(vals)

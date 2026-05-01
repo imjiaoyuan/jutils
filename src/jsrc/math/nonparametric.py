@@ -7,8 +7,7 @@ from jsrc.math.core import (
 def cmd(args):
     headers, data = parse_columns(args.input, args.sep)
     if not data:
-        print("Error: no data")
-        return
+        raise SystemExit("Error: no data")
     x, y = col_to_float_pair(data, args.col[0], args.col[1])
     if args.paired:
         _wilcoxon(x, y, args.output)
@@ -19,8 +18,7 @@ def cmd(args):
 def _mannwhitney(x, y, output):
     n1, n2 = len(x), len(y)
     if n1 < 2 or n2 < 2:
-        print("Error: need at least 2 per group")
-        return
+        raise SystemExit("Error: need at least 2 per group")
     all_vals = [(v, 0) for v in x] + [(v, 1) for v in y]
     all_vals.sort(key=lambda t: t[0])
     ranks = [0] * (n1 + n2)
@@ -61,13 +59,11 @@ def _mannwhitney(x, y, output):
 
 def _wilcoxon(x, y, output):
     if len(x) != len(y) or len(x) < 2:
-        print("Error: need at least 2 paired observations")
-        return
+        raise SystemExit("Error: need at least 2 paired observations")
     diffs = [b - a for a, b in zip(x, y)]
     nonzero = [(abs(d), d) for d in diffs if d != 0]
     if len(nonzero) < 2:
-        print("Error: not enough non-zero differences")
-        return
+        raise SystemExit("Error: not enough non-zero differences")
     n = len(nonzero)
     nonzero.sort(key=lambda t: t[0])
     ranks = [0] * n

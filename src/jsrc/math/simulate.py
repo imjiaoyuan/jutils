@@ -22,8 +22,7 @@ def cmd(args):
     elif model == "logistic":
         result = _logistic(dt, n_steps, params, init)
     else:
-        print(f"Error: unknown model '{model}'")
-        return
+        raise SystemExit(f"Error: unknown model '{model}'")
     lines = [result[0]]
     for row in result[1:]:
         lines.append("\t".join(f"{v:.6g}" for v in row))
