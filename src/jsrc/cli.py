@@ -62,7 +62,21 @@ def main():
     if hasattr(args, "func"):
         try:
             args.func(args)
+        except SystemExit as exc:
+            code = exc.code
+            if code is None:
+                return
+            if isinstance(code, int):
+                sys.exit(code)
+            msg = str(code).strip()
+            if not msg.startswith("Error:"):
+                msg = f"Error: {msg}"
+            print(msg, file=sys.stderr)
+            sys.exit(2)
         except (FileNotFoundError, ValueError) as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            sys.exit(2)
+        except Exception as exc:
             print(f"Error: {exc}", file=sys.stderr)
             sys.exit(2)
         return
