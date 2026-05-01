@@ -26,15 +26,20 @@ def cmd(args):
         chain.append(theta)
     posterior = chain[burnin:]
     post_mean = mean(posterior)
-    post_sd = math.sqrt(sum((x - post_mean) ** 2 for x in posterior) / (len(posterior) - 1))
-    write_output([
-        f"n_iter\t{n_iter}",
-        f"burnin\t{burnin}",
-        f"accept_rate\t{n_accepted / n_iter:.4f}",
-        f"posterior_mean\t{post_mean}",
-        f"posterior_sd\t{post_sd}",
-        f"n_effective\t{len(posterior)}",
-    ], args.output)
+    post_sd = math.sqrt(
+        sum((x - post_mean) ** 2 for x in posterior) / (len(posterior) - 1)
+    )
+    write_output(
+        [
+            f"n_iter\t{n_iter}",
+            f"burnin\t{burnin}",
+            f"accept_rate\t{n_accepted / n_iter:.4f}",
+            f"posterior_mean\t{post_mean}",
+            f"posterior_sd\t{post_sd}",
+            f"n_effective\t{len(posterior)}",
+        ],
+        args.output,
+    )
 
 
 def _log_likelihood(data, theta):
@@ -45,4 +50,7 @@ def _log_likelihood(data, theta):
 
 
 def _log_prior(theta, prior_mean, prior_sd):
-    return -0.5 * math.log(2 * math.pi * prior_sd ** 2) - 0.5 * ((theta - prior_mean) / prior_sd) ** 2
+    return (
+        -0.5 * math.log(2 * math.pi * prior_sd**2)
+        - 0.5 * ((theta - prior_mean) / prior_sd) ** 2
+    )

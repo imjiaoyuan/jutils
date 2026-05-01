@@ -9,4 +9,3 @@ def parse_gff_attributes(attr_string: str) -> dict[str, str]:
             if len(parts) == 2:
                 attrs[parts[0]] = parts[1].strip('"')
     return attrs
-

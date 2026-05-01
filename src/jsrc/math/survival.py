@@ -44,7 +44,7 @@ def _kaplan_meier(pairs, output):
         if n_events > 0 and at_risk > 0:
             surv *= (at_risk - n_events) / at_risk
         lines.append(f"{t}\t{at_risk}\t{n_events}\t{surv:.6g}")
-        at_risk -= (j - i)
+        at_risk -= j - i
         i = j
     write_output(lines, output)
 
@@ -78,16 +78,24 @@ def _logrank(groups, output):
             expected = n_risk[g0] * total_events / total_risk
             o_minus_e = n_events[g0] - expected
             o_minus_e_sum += o_minus_e
-            var = (total_risk - total_events) * total_events * n_risk[g0] * (total_risk - n_risk[g0])
-            var /= (total_risk ** 2 * (total_risk - 1)) if total_risk > 1 else 1
+            var = (
+                (total_risk - total_events)
+                * total_events
+                * n_risk[g0]
+                * (total_risk - n_risk[g0])
+            )
+            var /= (total_risk**2 * (total_risk - 1)) if total_risk > 1 else 1
             var_sum += var
-    chi2 = o_minus_e_sum ** 2 / var_sum if var_sum > 0 else 0
+    chi2 = o_minus_e_sum**2 / var_sum if var_sum > 0 else 0
     df = len(groups) - 1
     p = chi2_pvalue(chi2, df)
-    write_output([
-        "test\tlog_rank",
-        f"groups\t{len(groups)}",
-        f"chi2\t{chi2}",
-        f"df\t{df}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\tlog_rank",
+            f"groups\t{len(groups)}",
+            f"chi2\t{chi2}",
+            f"df\t{df}",
+            f"p\t{p}",
+        ],
+        output,
+    )

@@ -1,5 +1,10 @@
 from jsrc.math.core import parse_columns, write_output, mean
-from jsrc.math.decisiontree import _build_tree, _predict_one, _parse_xy as _dt_parse, _is_numeric_col
+from jsrc.math.decisiontree import (
+    _build_tree,
+    _predict_one,
+    _parse_xy as _dt_parse,
+    _is_numeric_col,
+)
 
 
 def cmd(args):
@@ -7,7 +12,11 @@ def cmd(args):
     test_headers, test_data = parse_columns(args.test)
     if not train_data:
         raise SystemExit("Error: empty training data")
-    feature_cols = [h for h in train_headers if h != args.target_col and _is_numeric_col(train_data, h)]
+    feature_cols = [
+        h
+        for h in train_headers
+        if h != args.target_col and _is_numeric_col(train_data, h)
+    ]
     if not feature_cols:
         raise SystemExit("Error: no numeric feature columns")
     X, y = _dt_parse(train_data, feature_cols, args.target_col)

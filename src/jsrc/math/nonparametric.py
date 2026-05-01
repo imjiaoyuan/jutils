@@ -1,6 +1,9 @@
 import math
 from jsrc.math.core import (
-    parse_columns, col_to_float_pair, write_output, normal_cdf,
+    parse_columns,
+    col_to_float_pair,
+    write_output,
+    normal_cdf,
 )
 
 
@@ -46,14 +49,17 @@ def _mannwhitney(x, y, output):
     else:
         z = (u - mu - 0.5) / sigma if u > mu else (u - mu + 0.5) / sigma
     p = 2.0 * normal_cdf(-abs(z)) if z != 0 else 1.0
-    write_output([
-        "test\tmann_whitney_u",
-        f"n1\t{n1}",
-        f"n2\t{n2}",
-        f"u\t{u}",
-        f"z\t{z}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\tmann_whitney_u",
+            f"n1\t{n1}",
+            f"n2\t{n2}",
+            f"u\t{u}",
+            f"z\t{z}",
+            f"p\t{p}",
+        ],
+        output,
+    )
 
 
 def _wilcoxon(x, y, output):
@@ -82,12 +88,15 @@ def _wilcoxon(x, y, output):
     sigma = math.sqrt(n * (n + 1) * (2 * n + 1) / 24.0)
     z = (w - mu) / sigma if sigma > 0 else 0
     p = 2.0 * normal_cdf(-abs(z)) if z != 0 else 1.0
-    write_output([
-        "test\twilcoxon_signed_rank",
-        f"n\t{n}",
-        f"w_plus\t{w_plus}",
-        f"w_minus\t{w_minus}",
-        f"w\t{w}",
-        f"z\t{z}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\twilcoxon_signed_rank",
+            f"n\t{n}",
+            f"w_plus\t{w_plus}",
+            f"w_minus\t{w_minus}",
+            f"w\t{w}",
+            f"z\t{z}",
+            f"p\t{p}",
+        ],
+        output,
+    )

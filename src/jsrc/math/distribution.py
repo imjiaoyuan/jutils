@@ -1,5 +1,9 @@
 from jsrc.math.core import (
-    normal_cdf, normal_pdf, t_cdf, f_cdf, chi2_cdf,
+    normal_cdf,
+    normal_pdf,
+    t_cdf,
+    f_cdf,
+    chi2_cdf,
 )
 from jsrc.math.core import write_output
 import math
@@ -20,9 +24,12 @@ def cmd(args):
         if df is None:
             raise SystemExit("Error: --df1 required for t distribution")
         cdf_val = t_cdf(x, df)
-        log_pdf = (math.lgamma((df + 1) / 2) - math.lgamma(df / 2)
-                   - 0.5 * math.log(df * math.pi)
-                   - (df + 1) / 2 * math.log(1 + x * x / df))
+        log_pdf = (
+            math.lgamma((df + 1) / 2)
+            - math.lgamma(df / 2)
+            - 0.5 * math.log(df * math.pi)
+            - (df + 1) / 2 * math.log(1 + x * x / df)
+        )
         pdf_val = math.exp(log_pdf)
         lines = ["distribution\tt", f"x\t{x}", f"df\t{df}", f"cdf\t{cdf_val}"]
         if args.pdf:
@@ -34,11 +41,26 @@ def cmd(args):
         if df1 is None or df2 is None:
             raise SystemExit("Error: --df1 and --df2 required for F distribution")
         cdf_val = f_cdf(x, df1, df2)
-        lines = ["distribution\tf", f"x\t{x}", f"df1\t{df1}", f"df2\t{df2}", f"cdf\t{cdf_val}"]
+        lines = [
+            "distribution\tf",
+            f"x\t{x}",
+            f"df1\t{df1}",
+            f"df2\t{df2}",
+            f"cdf\t{cdf_val}",
+        ]
         if args.pdf:
-            num = math.lgamma((df1 + df2) / 2) + (df1 / 2) * math.log(df1) + (df2 / 2) * math.log(df2)
+            num = (
+                math.lgamma((df1 + df2) / 2)
+                + (df1 / 2) * math.log(df1)
+                + (df2 / 2) * math.log(df2)
+            )
             den = math.lgamma(df1 / 2) + math.lgamma(df2 / 2)
-            log_pdf = num - den + (df1 / 2 - 1) * math.log(x) - (df1 + df2) / 2 * math.log(df1 * x + df2)
+            log_pdf = (
+                num
+                - den
+                + (df1 / 2 - 1) * math.log(x)
+                - (df1 + df2) / 2 * math.log(df1 * x + df2)
+            )
             pdf_val = math.exp(log_pdf) if x > 0 else 0
             lines.append(f"pdf\t{pdf_val}")
         write_output(lines, args.output)
@@ -49,7 +71,12 @@ def cmd(args):
         cdf_val = chi2_cdf(x, df)
         lines = ["distribution\tchi2", f"x\t{x}", f"df\t{df}", f"cdf\t{cdf_val}"]
         if args.pdf:
-            log_pdf = (df / 2 - 1) * math.log(x) - x / 2 - df / 2 * math.log(2) - math.lgamma(df / 2)
+            log_pdf = (
+                (df / 2 - 1) * math.log(x)
+                - x / 2
+                - df / 2 * math.log(2)
+                - math.lgamma(df / 2)
+            )
             pdf_val = math.exp(log_pdf) if x > 0 else 0
             lines.append(f"pdf\t{pdf_val}")
         write_output(lines, args.output)

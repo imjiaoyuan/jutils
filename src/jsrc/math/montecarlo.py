@@ -11,7 +11,6 @@ def _median(vals):
     return (s[n // 2 - 1] + s[n // 2]) / 2
 
 
-
 def cmd(args):
     n = args.n_samples
     mu = args.mean
@@ -28,13 +27,16 @@ def cmd(args):
         value = min(samples)
     elif stat == "max":
         value = max(samples)
-    write_output([
-        f"n\t{n}",
-        f"mean\t{mu}",
-        f"sd\t{sigma}",
-        f"statistic\t{stat}",
-        f"value\t{value}",
-    ], args.output)
+    write_output(
+        [
+            f"n\t{n}",
+            f"mean\t{mu}",
+            f"sd\t{sigma}",
+            f"statistic\t{stat}",
+            f"value\t{value}",
+        ],
+        args.output,
+    )
 
 
 def _normal_sample(mu, sigma):

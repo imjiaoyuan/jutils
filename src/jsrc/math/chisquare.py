@@ -1,11 +1,15 @@
 from jsrc.math.core import (
-    parse_columns, write_output, chi2_pvalue,
+    parse_columns,
+    write_output,
+    chi2_pvalue,
 )
 
 
 def cmd(args):
     if args.observed and args.col:
-        raise SystemExit("Error: specify either --observed/--expected or --col, not both")
+        raise SystemExit(
+            "Error: specify either --observed/--expected or --col, not both"
+        )
     if args.observed:
         _goodness_of_fit(args.observed, args.expected, args.output)
     elif args.col:
@@ -18,7 +22,9 @@ def _goodness_of_fit(observed, expected, output):
     n = len(observed)
     if expected:
         if len(expected) != n:
-            raise SystemExit(f"Error: observed ({n}) and expected ({len(expected)}) length differ")
+            raise SystemExit(
+                f"Error: observed ({n}) and expected ({len(expected)}) length differ"
+            )
     else:
         total = sum(observed)
         expected = [total / n] * n
@@ -30,12 +36,15 @@ def _goodness_of_fit(observed, expected, output):
     chi2 = sum((o - e) ** 2 / e for o, e in zip(observed, expected) if e > 0)
     df = n - 1
     p = chi2_pvalue(chi2, df)
-    write_output([
-        "test\tgoodness_of_fit",
-        f"chi2\t{chi2}",
-        f"df\t{df}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\tgoodness_of_fit",
+            f"chi2\t{chi2}",
+            f"df\t{df}",
+            f"p\t{p}",
+        ],
+        output,
+    )
 
 
 def _independence(filepath, sep, col1, col2, output):
@@ -77,11 +86,14 @@ def _independence(filepath, sep, col1, col2, output):
                 chi2 += (observed - expected) ** 2 / expected
     df = (len(row_levels) - 1) * (len(col_levels) - 1)
     p = chi2_pvalue(chi2, df)
-    write_output([
-        "test\tindependence",
-        f"rows\t{len(row_levels)}",
-        f"cols\t{len(col_levels)}",
-        f"chi2\t{chi2}",
-        f"df\t{df}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\tindependence",
+            f"rows\t{len(row_levels)}",
+            f"cols\t{len(col_levels)}",
+            f"chi2\t{chi2}",
+            f"df\t{df}",
+            f"p\t{p}",
+        ],
+        output,
+    )

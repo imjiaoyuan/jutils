@@ -1,5 +1,11 @@
 import math
-from jsrc.math.core import parse_columns, col_to_float_pair, write_output, t_pvalue, mean
+from jsrc.math.core import (
+    parse_columns,
+    col_to_float_pair,
+    write_output,
+    t_pvalue,
+    mean,
+)
 
 
 def cmd(args):
@@ -53,7 +59,9 @@ def _spearman(x, y):
     mx = mean(x_rank)
     my = mean(y_rank)
     num = sum((a - mx) * (b - my) for a, b in zip(x_rank, y_rank))
-    den = math.sqrt(sum((a - mx) ** 2 for a in x_rank) * sum((b - my) ** 2 for b in y_rank))
+    den = math.sqrt(
+        sum((a - mx) ** 2 for a in x_rank) * sum((b - my) ** 2 for b in y_rank)
+    )
     if den == 0:
         return 0.0, 1.0
     rho = num / den

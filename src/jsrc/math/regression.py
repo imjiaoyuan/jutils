@@ -1,7 +1,11 @@
 import math
 from jsrc.math.core import (
-    parse_columns, col_to_float_pair, write_output, mean,
-    t_pvalue, f_pvalue,
+    parse_columns,
+    col_to_float_pair,
+    write_output,
+    mean,
+    t_pvalue,
+    f_pvalue,
 )
 
 
@@ -31,7 +35,7 @@ def _simple_linear(x, y, output):
     slope = num / den
     intercept = my - slope * mx
     residuals = [b - (intercept + slope * a) for a, b in zip(x, y)]
-    ss_res = sum(r ** 2 for r in residuals)
+    ss_res = sum(r**2 for r in residuals)
     ss_tot = den2
     r2 = 1.0 - ss_res / ss_tot if ss_tot != 0 else 0.0
     adj_r2 = 1.0 - (ss_res / (n - 2)) / (ss_tot / (n - 1)) if ss_tot != 0 else 0.0
@@ -57,24 +61,27 @@ def _simple_linear(x, y, output):
     else:
         f_stat = float("inf") if ss_reg > 0 else 0
         p_f = 0.0 if ss_reg > 0 else 1.0
-    write_output([
-        f"n\t{n}",
-        f"slope\t{slope}",
-        f"intercept\t{intercept}",
-        f"r2\t{r2}",
-        f"adj_r2\t{adj_r2}",
-        f"se_slope\t{se_slope}",
-        f"se_intercept\t{se_intercept}",
-        f"t_slope\t{t_slope}",
-        f"p_slope\t{p_slope}",
-        f"t_intercept\t{t_intercept}",
-        f"p_intercept\t{p_intercept}",
-        f"f\t{f_stat}",
-        f"p_f\t{p_f}",
-        "df1\t1",
-        f"df2\t{n - 2}",
-        f"se_regression\t{se_reg}",
-    ], output)
+    write_output(
+        [
+            f"n\t{n}",
+            f"slope\t{slope}",
+            f"intercept\t{intercept}",
+            f"r2\t{r2}",
+            f"adj_r2\t{adj_r2}",
+            f"se_slope\t{se_slope}",
+            f"se_intercept\t{se_intercept}",
+            f"t_slope\t{t_slope}",
+            f"p_slope\t{p_slope}",
+            f"t_intercept\t{t_intercept}",
+            f"p_intercept\t{p_intercept}",
+            f"f\t{f_stat}",
+            f"p_f\t{p_f}",
+            "df1\t1",
+            f"df2\t{n - 2}",
+            f"se_regression\t{se_reg}",
+        ],
+        output,
+    )
 
 
 def _polynomial(x, y, degree, output):
@@ -83,18 +90,20 @@ def _polynomial(x, y, degree, output):
     for xi in x:
         row = [1.0]
         for d in range(1, degree + 1):
-            row.append(xi ** d)
+            row.append(xi**d)
         m.append(row)
     p = degree + 1
     if n <= p:
         raise SystemExit(f"Error: need more points than parameters ({n} <= {p})")
-    xtx = [[sum(m[k][i] * m[k][j] for k in range(n)) for j in range(p)] for i in range(p)]
+    xtx = [
+        [sum(m[k][i] * m[k][j] for k in range(n)) for j in range(p)] for i in range(p)
+    ]
     xty = [sum(m[k][i] * y[k] for k in range(n)) for i in range(p)]
     beta = _cholesky_solve(xtx, xty, p)
     if beta is None:
         raise SystemExit("Error: singular matrix")
     residuals = [b - sum(beta[i] * m[k][i] for i in range(p)) for k, b in enumerate(y)]
-    ss_res = sum(r ** 2 for r in residuals)
+    ss_res = sum(r**2 for r in residuals)
     my = mean(y)
     ss_tot = sum((b - my) ** 2 for b in y)
     r2 = 1.0 - ss_res / ss_tot if ss_tot != 0 else 0.0

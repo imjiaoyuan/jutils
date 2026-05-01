@@ -1,5 +1,10 @@
 from jsrc.math.core import (
-    parse_columns, col_to_float, col_to_float_pair, write_output, mean, var_s,
+    parse_columns,
+    col_to_float,
+    col_to_float_pair,
+    write_output,
+    mean,
+    var_s,
     t_pvalue,
 )
 import math
@@ -35,17 +40,20 @@ def _one_sample(data, col, mu, output):
     t_crit = _t_inv_95(df)
     ci_lo = m - t_crit * se
     ci_hi = m + t_crit * se
-    write_output([
-        "test\tone_sample",
-        f"n\t{n}",
-        f"mean\t{m}",
-        f"mu\t{mu}",
-        f"t\t{t}",
-        f"df\t{df}",
-        f"p\t{p}",
-        f"ci_95_lo\t{ci_lo}",
-        f"ci_95_hi\t{ci_hi}",
-    ], output)
+    write_output(
+        [
+            "test\tone_sample",
+            f"n\t{n}",
+            f"mean\t{m}",
+            f"mu\t{mu}",
+            f"t\t{t}",
+            f"df\t{df}",
+            f"p\t{p}",
+            f"ci_95_lo\t{ci_lo}",
+            f"ci_95_hi\t{ci_hi}",
+        ],
+        output,
+    )
 
 
 def _independent(data, col1, col2, equal_var, output):
@@ -66,18 +74,21 @@ def _independent(data, col1, col2, equal_var, output):
         df = num / den if den > 0 else 0
     t = (m1 - m2) / se if se > 0 else 0
     p = t_pvalue(t, df, two_sided=True)
-    write_output([
-        f"test\t{'welch' if not equal_var else 'independent'}",
-        f"n1\t{n1}",
-        f"mean1\t{m1}",
-        f"var1\t{v1}",
-        f"n2\t{n2}",
-        f"mean2\t{m2}",
-        f"var2\t{v2}",
-        f"t\t{t}",
-        f"df\t{df}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            f"test\t{'welch' if not equal_var else 'independent'}",
+            f"n1\t{n1}",
+            f"mean1\t{m1}",
+            f"var1\t{v1}",
+            f"n2\t{n2}",
+            f"mean2\t{m2}",
+            f"var2\t{v2}",
+            f"t\t{t}",
+            f"df\t{df}",
+            f"p\t{p}",
+        ],
+        output,
+    )
 
 
 def _paired(data, col1, col2, output):
@@ -92,15 +103,18 @@ def _paired(data, col1, col2, output):
     t = m / se if se > 0 else 0
     df = n - 1
     p = t_pvalue(t, df, two_sided=True)
-    write_output([
-        "test\tpaired",
-        f"n\t{n}",
-        f"mean_diff\t{m}",
-        f"sd_diff\t{s}",
-        f"t\t{t}",
-        f"df\t{df}",
-        f"p\t{p}",
-    ], output)
+    write_output(
+        [
+            "test\tpaired",
+            f"n\t{n}",
+            f"mean_diff\t{m}",
+            f"sd_diff\t{s}",
+            f"t\t{t}",
+            f"df\t{df}",
+            f"p\t{p}",
+        ],
+        output,
+    )
 
 
 def _t_inv_95(df):
@@ -109,6 +123,6 @@ def _t_inv_95(df):
     if df > 200:
         return 1.96
     z = 1.96
-    a = (z ** 3 + z) / 4
-    b = (5 * z ** 5 + 16 * z ** 3 + 3 * z) / 96
-    return z + a / df + b / (df ** 2)
+    a = (z**3 + z) / 4
+    b = (5 * z**5 + 16 * z**3 + 3 * z) / 96
+    return z + a / df + b / (df**2)

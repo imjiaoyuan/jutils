@@ -104,6 +104,6 @@ def _kurtosis(vals, m, s, n):
     if s == 0:
         return 0.0
     num = sum((x - m) ** 4 for x in vals) / n
-    den = (s ** 4)
+    den = s**4
     k = num / den if den != 0 else 0
     return k - 3.0

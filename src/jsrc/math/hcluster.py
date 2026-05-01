@@ -112,15 +112,18 @@ def _cut_tree(merge_history, n, k):
     sorted_merges = sorted(merge_history, key=lambda x: x[2])
     cuts = n - k
     parent = list(range(n))
+
     def find(x):
         while parent[x] != x:
             parent[x] = parent[parent[x]]
             x = parent[x]
         return x
+
     def union(x, y):
         px, py = find(x), find(y)
         if px != py:
             parent[py] = px
+
     for m in sorted_merges[:cuts]:
         union(m[0] if m[0] < n else 0, m[1] if m[1] < n else 0)
     cluster_map = {}

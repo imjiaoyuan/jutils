@@ -25,8 +25,14 @@ def cmd(args):
     if len(X) < args.k:
         raise SystemExit(f"Error: fewer points ({len(X)}) than clusters ({args.k})")
     clusters, centroids, inertia = _kmeans(X, args.k, args.max_iter)
-    lines = [f"k\t{args.k}", f"n\t{len(X)}", f"features\t{len(feature_cols)}",
-             f"inertia\t{inertia}", f"iterations\t{args.max_iter}", ""]
+    lines = [
+        f"k\t{args.k}",
+        f"n\t{len(X)}",
+        f"features\t{len(feature_cols)}",
+        f"inertia\t{inertia}",
+        f"iterations\t{args.max_iter}",
+        "",
+    ]
     lines.append("cluster\t" + "\t".join(feature_cols))
     for i, (cl, vec) in enumerate(zip(clusters, X)):
         lines.append(f"{cl}\t" + "\t".join(f"{v:.6g}" for v in vec))
@@ -79,7 +85,9 @@ def _kmeans(X, k, max_iter=100):
         for j in range(k):
             members = [X[i] for i in range(n) if clusters[i] == j]
             if members:
-                new_centroids.append([sum(vals) / len(members) for vals in zip(*members)])
+                new_centroids.append(
+                    [sum(vals) / len(members) for vals in zip(*members)]
+                )
             else:
                 new_centroids.append(centroids[j][:])
         centroids = new_centroids

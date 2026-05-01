@@ -7,7 +7,11 @@ def cmd(args):
     test_headers, test_data = parse_columns(args.test)
     if not train_data:
         raise SystemExit("Error: empty training data")
-    feature_cols = [h for h in train_headers if h != args.target_col and _is_numeric_col(train_data, h)]
+    feature_cols = [
+        h
+        for h in train_headers
+        if h != args.target_col and _is_numeric_col(train_data, h)
+    ]
     if not feature_cols:
         raise SystemExit("Error: no numeric feature columns")
     X, y = _parse_xy(train_data, feature_cols, args.target_col)
@@ -143,7 +147,9 @@ def _impurity(y, regression):
 
 def _weighted_impurity(left_y, right_y, regression):
     n = len(left_y) + len(right_y)
-    return (len(left_y) / n) * _impurity(left_y, regression) + (len(right_y) / n) * _impurity(right_y, regression)
+    return (len(left_y) / n) * _impurity(left_y, regression) + (
+        len(right_y) / n
+    ) * _impurity(right_y, regression)
 
 
 def _split(X, y, feat, thresh):
@@ -172,7 +178,11 @@ def _print_tree(tree, feature_cols, depth=0):
     if "value" in tree:
         print(f"{prefix}-> {tree['value']}")
     else:
-        feat_name = feature_cols[tree["feat"]] if tree["feat"] < len(feature_cols) else f"feat{tree['feat']}"
+        feat_name = (
+            feature_cols[tree["feat"]]
+            if tree["feat"] < len(feature_cols)
+            else f"feat{tree['feat']}"
+        )
         print(f"{prefix}{feat_name} <= {tree['thresh']:.4g}:")
         _print_tree(tree["left"], feature_cols, depth + 1)
         print(f"{prefix}{feat_name} > {tree['thresh']:.4g}:")

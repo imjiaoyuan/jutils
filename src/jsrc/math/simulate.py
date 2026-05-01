@@ -52,7 +52,12 @@ def _sir(dt, n_steps, params, init):
 
 
 def _lotkavolterra(dt, n_steps, params, init):
-    alpha, beta, gamma, delta = params[0], params[1], params[2], params[3] if len(params) > 3 else 1.0
+    alpha, beta, gamma, delta = (
+        params[0],
+        params[1],
+        params[2],
+        params[3] if len(params) > 3 else 1.0,
+    )
     prey = init[0] if init and len(init) > 0 else 40.0
     pred = init[1] if init and len(init) > 1 else 9.0
     header = "t\tprey\tpredator"
@@ -92,7 +97,12 @@ def _pk1(dt, n_steps, params, init):
 
 
 def _emax(dt, n_steps, params, init):
-    E0, Emax, EC50, ke = params[0], params[1], params[2], params[3] if len(params) > 3 else 0.1
+    E0, Emax, EC50, ke = (
+        params[0],
+        params[1],
+        params[2],
+        params[3] if len(params) > 3 else 0.1,
+    )
     dose = params[4] if len(params) > 4 else 10.0
     C = init[0] if init and len(init) > 0 else dose
     header = "t\tC\tE"

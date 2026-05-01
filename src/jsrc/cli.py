@@ -19,7 +19,9 @@ MODULES = {
 
 def _iter_enabled_modules():
     only = [x.strip() for x in os.getenv("JSRC_MODULES", "").split(",") if x.strip()]
-    disabled = {x.strip() for x in os.getenv("JSRC_DISABLE_MODULES", "").split(",") if x.strip()}
+    disabled = {
+        x.strip() for x in os.getenv("JSRC_DISABLE_MODULES", "").split(",") if x.strip()
+    }
     names = only if only else list(MODULES.keys())
     return [n for n in names if n in MODULES and n not in disabled]
 
@@ -42,7 +44,9 @@ def _register_modules(subparsers):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="jsrc", description="General-purpose bioinformatics and data toolkit")
+    parser = argparse.ArgumentParser(
+        prog="jsrc", description="General-purpose bioinformatics and data toolkit"
+    )
     parser.add_argument("-v", "--version", action="version", version=__version__)
     subparsers = parser.add_subparsers(dest="command", help="Available modules")
 

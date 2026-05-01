@@ -1,5 +1,8 @@
 from jsrc.math.core import (
-    parse_columns, col_to_float_grouped, write_output, f_pvalue,
+    parse_columns,
+    col_to_float_grouped,
+    write_output,
+    f_pvalue,
 )
 
 
@@ -40,12 +43,15 @@ def _oneway(groups, output):
     f_val = msb / msw if msw > 0 else 0
     p_val = f_pvalue(f_val, dfb, dfw)
     eta2 = ssb / (ssb + ssw) if (ssb + ssw) > 0 else 0
-    write_output([
-        "source\tss\tdf\tms\tf\tp",
-        f"between\t{ssb}\t{dfb}\t{msb}\t{f_val}\t{p_val}",
-        f"within\t{ssw}\t{dfw}\t{msw}",
-        f"total\t{ssb + ssw}\t{total_n - 1}",
-        f"eta_sq\t{eta2}",
-        f"k\t{k}",
-        f"n\t{total_n}",
-    ], output)
+    write_output(
+        [
+            "source\tss\tdf\tms\tf\tp",
+            f"between\t{ssb}\t{dfb}\t{msb}\t{f_val}\t{p_val}",
+            f"within\t{ssw}\t{dfw}\t{msw}",
+            f"total\t{ssb + ssw}\t{total_n - 1}",
+            f"eta_sq\t{eta2}",
+            f"k\t{k}",
+            f"n\t{total_n}",
+        ],
+        output,
+    )

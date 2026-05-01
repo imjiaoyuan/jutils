@@ -8,7 +8,11 @@ def cmd(args):
     test_headers, test_data = parse_columns(args.test)
     if not train_data:
         raise SystemExit("Error: empty training data")
-    feature_cols = [h for h in train_headers if h != args.target_col and _is_numeric_col(train_data, h)]
+    feature_cols = [
+        h
+        for h in train_headers
+        if h != args.target_col and _is_numeric_col(train_data, h)
+    ]
     if not feature_cols:
         raise SystemExit("Error: no numeric feature columns")
     X_train, y_train = _parse_xy(train_data, feature_cols, args.target_col)

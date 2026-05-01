@@ -7,7 +7,11 @@ def cmd(args):
     test_headers, test_data = parse_columns(args.test)
     if not train_data or not test_data:
         raise SystemExit("Error: empty training or test data")
-    feature_cols = [h for h in train_headers if h != args.target_col and _is_numeric_col(train_data, h)]
+    feature_cols = [
+        h
+        for h in train_headers
+        if h != args.target_col and _is_numeric_col(train_data, h)
+    ]
     if not feature_cols:
         raise SystemExit("Error: no numeric feature columns")
     X_train, y_train = _parse_xy(train_data, feature_cols, args.target_col)
@@ -82,6 +86,7 @@ def _predict(X_train, y_train, x_test, k, regression):
         return sum(vals) / len(vals) if vals else 0.0
     else:
         from collections import Counter
+
         labels = [str(n[1]) for n in neighbors]
         counts = Counter(labels)
         return counts.most_common(1)[0][0]
