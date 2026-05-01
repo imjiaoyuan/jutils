@@ -164,7 +164,12 @@ def parse_columns(filepath, sep=None):
 def col_to_float(data, col):
     if isinstance(col, int) or col.isdigit():
         idx = int(col)
-        col_name = list(data[0].keys())[idx] if data else col
+        if not data:
+            raise SystemExit("Error: no data")
+        keys = list(data[0].keys())
+        if idx < 0 or idx >= len(keys):
+            raise SystemExit(f"Error: column index out of range: {idx}")
+        col_name = keys[idx]
     else:
         col_name = col
     vals = []
@@ -182,12 +187,22 @@ def col_to_float(data, col):
 def col_to_float_pair(data, col1, col2):
     if isinstance(col1, int) or col1.isdigit():
         idx1 = int(col1)
-        c1 = list(data[0].keys())[idx1] if data else col1
+        if not data:
+            raise SystemExit("Error: no data")
+        keys = list(data[0].keys())
+        if idx1 < 0 or idx1 >= len(keys):
+            raise SystemExit(f"Error: column index out of range: {idx1}")
+        c1 = keys[idx1]
     else:
         c1 = col1
     if isinstance(col2, int) or col2.isdigit():
         idx2 = int(col2)
-        c2 = list(data[0].keys())[idx2] if data else col2
+        if not data:
+            raise SystemExit("Error: no data")
+        keys = list(data[0].keys())
+        if idx2 < 0 or idx2 >= len(keys):
+            raise SystemExit(f"Error: column index out of range: {idx2}")
+        c2 = keys[idx2]
     else:
         c2 = col2
     x_vals, y_vals = [], []
@@ -207,12 +222,22 @@ def col_to_float_pair(data, col1, col2):
 def col_to_float_grouped(data, col_group, col_value):
     if isinstance(col_group, int) or col_group.isdigit():
         gi = int(col_group)
-        cg = list(data[0].keys())[gi] if data else col_group
+        if not data:
+            raise SystemExit("Error: no data")
+        keys = list(data[0].keys())
+        if gi < 0 or gi >= len(keys):
+            raise SystemExit(f"Error: column index out of range: {gi}")
+        cg = keys[gi]
     else:
         cg = col_group
     if isinstance(col_value, int) or col_value.isdigit():
         vi = int(col_value)
-        cv = list(data[0].keys())[vi] if data else col_value
+        if not data:
+            raise SystemExit("Error: no data")
+        keys = list(data[0].keys())
+        if vi < 0 or vi >= len(keys):
+            raise SystemExit(f"Error: column index out of range: {vi}")
+        cv = keys[vi]
     else:
         cv = col_value
     groups = {}
