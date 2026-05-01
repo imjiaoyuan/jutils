@@ -1,6 +1,6 @@
 # jsrc
 
-A CLI toolkit for data processing, analysis, and visualization.
+Python library for scientific computing and visualization.
 
 ## Installation
 

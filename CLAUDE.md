@@ -2,6 +2,11 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Important Rules
+
+- **Never commit code** — I must not directly create commits, push, or publish. The user handles all git operations, version bumps, and PyPI releases.
+- **Only suggest changes** — I should present code changes and let the user decide when/how to commit them.
+
 ## Build & Run
 
 ```bash

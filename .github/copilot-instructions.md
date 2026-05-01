@@ -1,6 +1,13 @@
-# Copilot Instructions for jutils
+# Copilot Instructions for jsrc
 
-A collection of bioinformatics and phenotype analysis utilities organized into three main modules: omics, pheno, and misc.
+A modular CLI toolkit for bioinformatics and data analysis.
+
+## Important Rules
+
+- **Never commit code** — Copilot must not directly create commits, push, or publish. The user handles all git operations, version bumps, and PyPI releases.
+- **Only suggest changes** — Present code changes as suggestions; let the user decide when and how to commit them.
+
+## Project Structure
 
 ## Project Structure
 
