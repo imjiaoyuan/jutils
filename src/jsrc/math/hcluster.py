@@ -91,8 +91,7 @@ def _hcluster(X, method):
                 continue
             d_ik = dist[i][k]
             d_jk = dist[j][k]
-            d_ij = min_dist
-            si, sj, sk = sizes[i], sizes[j], sizes[k]
+            si, sj, _ = sizes[i], sizes[j], sizes[k]
             if method == "single":
                 d_new = min(d_ik, d_jk)
             elif method == "complete":

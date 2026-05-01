@@ -1,5 +1,5 @@
 from jsrc.math.core import (
-    parse_columns, write_output, chi2_pvalue, chi2_cdf,
+    parse_columns, write_output, chi2_pvalue,
 )
 
 
@@ -31,7 +31,7 @@ def _goodness_of_fit(observed, expected, output):
     df = n - 1
     p = chi2_pvalue(chi2, df)
     write_output([
-        f"test\tgoodness_of_fit",
+        "test\tgoodness_of_fit",
         f"chi2\t{chi2}",
         f"df\t{df}",
         f"p\t{p}",
@@ -78,7 +78,7 @@ def _independence(filepath, sep, col1, col2, output):
     df = (len(row_levels) - 1) * (len(col_levels) - 1)
     p = chi2_pvalue(chi2, df)
     write_output([
-        f"test\tindependence",
+        "test\tindependence",
         f"rows\t{len(row_levels)}",
         f"cols\t{len(col_levels)}",
         f"chi2\t{chi2}",

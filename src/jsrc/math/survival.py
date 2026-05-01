@@ -1,4 +1,3 @@
-import math
 from jsrc.math.core import parse_columns, col_to_float, write_output, chi2_pvalue
 
 
@@ -86,7 +85,7 @@ def _logrank(groups, output):
     df = len(groups) - 1
     p = chi2_pvalue(chi2, df)
     write_output([
-        f"test\tlog_rank",
+        "test\tlog_rank",
         f"groups\t{len(groups)}",
         f"chi2\t{chi2}",
         f"df\t{df}",

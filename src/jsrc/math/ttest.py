@@ -1,6 +1,6 @@
 from jsrc.math.core import (
     parse_columns, col_to_float, col_to_float_pair, write_output, mean, var_s,
-    t_pvalue, t_cdf,
+    t_pvalue,
 )
 import math
 
@@ -36,7 +36,7 @@ def _one_sample(data, col, mu, output):
     ci_lo = m - t_crit * se
     ci_hi = m + t_crit * se
     write_output([
-        f"test\tone_sample",
+        "test\tone_sample",
         f"n\t{n}",
         f"mean\t{m}",
         f"mu\t{mu}",
@@ -93,7 +93,7 @@ def _paired(data, col1, col2, output):
     df = n - 1
     p = t_pvalue(t, df, two_sided=True)
     write_output([
-        f"test\tpaired",
+        "test\tpaired",
         f"n\t{n}",
         f"mean_diff\t{m}",
         f"sd_diff\t{s}",

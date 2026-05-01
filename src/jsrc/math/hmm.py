@@ -19,18 +19,17 @@ def cmd(args):
     emit = [[args.emit_probs[i * n_obs + j] for j in range(n_obs)] for i in range(n_states)]
     start = args.start_probs
     obs_seq = [obs_map[o] for o in observations]
-    T = len(obs_seq)
     if args.task == "forward":
         alpha = _forward(obs_seq, n_states, start, trans, emit)
         log_prob = math.log(sum(alpha[-1])) if sum(alpha[-1]) > 0 else -float("inf")
-        output_lines = [f"task\tforward", f"log_probability\t{log_prob:.6g}"]
+        output_lines = ["task\tforward", f"log_probability\t{log_prob:.6g}"]
         for t, probs in enumerate(alpha):
             for s, p in zip(states, probs):
                 output_lines.append(f"t{t}\t{s}\t{p:.6g}")
         write_output(output_lines, args.output)
     elif args.task == "backward":
         beta = _backward(obs_seq, n_states, trans, emit)
-        output_lines = [f"task\tbackward"]
+        output_lines = ["task\tbackward"]
         for t, probs in enumerate(beta):
             for s, p in zip(states, probs):
                 output_lines.append(f"t{t}\t{s}\t{p:.6g}")
@@ -38,7 +37,7 @@ def cmd(args):
     else:
         path, prob = _viterbi(obs_seq, n_states, start, trans, emit)
         output_lines = [
-            f"task\tviterbi",
+            "task\tviterbi",
             f"log_probability\t{prob:.6g}",
             f"path\t{' '.join(states[s] for s in path)}",
         ]

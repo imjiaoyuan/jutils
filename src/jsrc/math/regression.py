@@ -1,7 +1,7 @@
 import math
 from jsrc.math.core import (
     parse_columns, col_to_float_pair, write_output, mean,
-    t_pvalue, f_pvalue, t_cdf,
+    t_pvalue, f_pvalue,
 )
 
 
@@ -71,7 +71,7 @@ def _simple_linear(x, y, output):
         f"p_intercept\t{p_intercept}",
         f"f\t{f_stat}",
         f"p_f\t{p_f}",
-        f"df1\t1",
+        "df1\t1",
         f"df2\t{n - 2}",
         f"se_regression\t{se_reg}",
     ], output)

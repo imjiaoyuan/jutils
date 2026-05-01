@@ -32,21 +32,21 @@ def cmd(args):
 def _sir(dt, n_steps, params, init):
     beta, gamma = params[0], params[1] if len(params) > 1 else 0.1
     S = init[0] if init and len(init) > 0 else 990.0
-    I = init[1] if init and len(init) > 1 else 10.0
+    infected = init[1] if init and len(init) > 1 else 10.0
     R = init[2] if init and len(init) > 2 else 0.0
     header = "t\tS\tI\tR"
     rows = []
     t = 0.0
     for _ in range(n_steps):
-        rows.append((t, S, I, R))
-        dS = -beta * S * I / (S + I + R) * dt
-        dI = (beta * S * I / (S + I + R) - gamma * I) * dt
-        dR = gamma * I * dt
+        rows.append((t, S, infected, R))
+        dS = -beta * S * infected / (S + infected + R) * dt
+        dI = (beta * S * infected / (S + infected + R) - gamma * infected) * dt
+        dR = gamma * infected * dt
         S += dS
-        I += dI
+        infected += dI
         R += dR
         t += dt
-        if I < 0.01 and t > 1:
+        if infected < 0.01 and t > 1:
             break
     return [header] + rows
 

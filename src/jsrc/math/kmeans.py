@@ -51,7 +51,6 @@ def _is_numeric_col(data, col):
 
 def _kmeans(X, k, max_iter=100):
     n = len(X)
-    dim = len(X[0])
     centroids = [X[random.randint(0, n - 1)]]
     for _ in range(1, k):
         dists = [min(_euclidean(x, c) ** 2 for c in centroids) for x in X]

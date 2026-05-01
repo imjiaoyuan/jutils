@@ -1,4 +1,3 @@
-import math
 from jsrc.math.core import parse_columns, write_output, mean
 from jsrc.math.decisiontree import _build_tree, _predict_one, _parse_xy as _dt_parse, _is_numeric_col
 

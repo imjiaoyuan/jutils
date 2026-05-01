@@ -1,4 +1,3 @@
-import math
 from collections import Counter
 from jsrc.math.core import parse_columns, write_output, mean, var_s
 

@@ -1,6 +1,6 @@
 import math
 from jsrc.math.core import (
-    parse_columns, col_to_float_pair, write_output, mean, normal_cdf,
+    parse_columns, col_to_float_pair, write_output, normal_cdf,
 )
 
 
@@ -40,7 +40,6 @@ def _mannwhitney(x, y, output):
     for k in range(n1 + n2):
         v = all_vals[k][0]
         tie_counts[v] = tie_counts.get(v, 0) + 1
-    tie_correction = 1.0 - sum(t ** 3 - t for t in tie_counts.values()) / ((n1 + n2) ** 3 - (n1 + n2))
     sigma = math.sqrt(n1 * n2 * (n1 + n2 + 1) / 12.0)
     if sigma == 0:
         z = 0
@@ -48,7 +47,7 @@ def _mannwhitney(x, y, output):
         z = (u - mu - 0.5) / sigma if u > mu else (u - mu + 0.5) / sigma
     p = 2.0 * normal_cdf(-abs(z)) if z != 0 else 1.0
     write_output([
-        f"test\tmann_whitney_u",
+        "test\tmann_whitney_u",
         f"n1\t{n1}",
         f"n2\t{n2}",
         f"u\t{u}",
@@ -84,7 +83,7 @@ def _wilcoxon(x, y, output):
     z = (w - mu) / sigma if sigma > 0 else 0
     p = 2.0 * normal_cdf(-abs(z)) if z != 0 else 1.0
     write_output([
-        f"test\twilcoxon_signed_rank",
+        "test\twilcoxon_signed_rank",
         f"n\t{n}",
         f"w_plus\t{w_plus}",
         f"w_minus\t{w_minus}",
