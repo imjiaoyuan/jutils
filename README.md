@@ -53,7 +53,6 @@ jsrc vision extract --help
 | `grn` | GRN conversion, centrality, local viewer | `jsrc grn net2json ...` |
 | `vision` | Object extraction, morphology traits, EFD | `jsrc vision extract ...` |
 | `job` | Background job submit/list/log/kill/history | `jsrc job submit "cmd"` |
-| `math` | Statistics and ML-style CLI utilities | `jsrc math statistics ...` |
 
 ## Error Output Conventions
 

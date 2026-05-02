@@ -13,7 +13,6 @@ MODULES = {
     "grn": "jsrc.grn",
     "vision": "jsrc.vision",
     "job": "jsrc.job",
-    "math": "jsrc.math",
 }
 
 
