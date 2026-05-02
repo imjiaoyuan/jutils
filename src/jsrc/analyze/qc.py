@@ -151,6 +151,14 @@ def _vcf_stats(vcf_path: str) -> dict[str, int]:
     }
 
 
+def _format_int(x: int) -> str:
+    return f"{x:,}"
+
+
+def _format_float(x: float, ndigits: int = 2) -> str:
+    return f"{x:.{ndigits}f}"
+
+
 def _print_human(stats: dict[str, dict[str, float | int]]) -> None:
     for section, values in stats.items():
         print(f"[{section}]")
