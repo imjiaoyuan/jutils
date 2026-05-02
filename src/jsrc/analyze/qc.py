@@ -51,7 +51,6 @@ _CIGAR_RE = re.compile(r"(\d+)([MIDNSHP=X])")
 
 
 def _mapped_ref_bases(cigar: str) -> int:
-    # Reference-consuming ops: M, D, N, =, X
     total = 0
     for length, op in _CIGAR_RE.findall(cigar):
         if op in {"M", "D", "N", "=", "X"}:
