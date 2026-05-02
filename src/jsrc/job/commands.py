@@ -39,14 +39,14 @@ def _now_iso() -> str:
 def _to_int(value: str, default: int = 0) -> int:
     try:
         return int(value)
-    except Exception:
+    except (TypeError, ValueError):
         return default
 
 
 def _to_float(value: str, default: float = 0.0) -> float:
     try:
         return float(value)
-    except Exception:
+    except (TypeError, ValueError):
         return default
 
 
@@ -180,7 +180,7 @@ def _parse_iso(ts: str) -> datetime | None:
         return None
     try:
         return datetime.fromisoformat(ts)
-    except Exception:
+    except (TypeError, ValueError):
         return None
 
 
