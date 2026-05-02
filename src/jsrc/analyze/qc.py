@@ -11,14 +11,6 @@ def _open_text(path: str):
     return open(path, "r", encoding="utf-8")
 
 
-def _format_int(x: int) -> str:
-    return f"{x:,}"
-
-
-def _format_float(x: float, ndigits: int = 2) -> str:
-    return f"{x:.{ndigits}f}"
-
-
 def _nxx(lengths: list[int], pct: float) -> int:
     if not lengths:
         return 0
