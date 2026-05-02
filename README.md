@@ -160,6 +160,8 @@ jsrc analyze phylo -fa test/analyze/aln.fa -o test/analyze/tree.nwk
 
 Submit, monitor, and inspect background jobs:
 
+> Note: RSS/process-state metrics are most complete on Linux (`/proc`). On macOS/other Unix, `job` still works with `ps` fallback but some metrics may be limited.
+
 ```bash
 jsrc job submit "echo 'job module test' && sleep 1 && echo done" -N test-job
 ```
