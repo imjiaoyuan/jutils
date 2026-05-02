@@ -19,7 +19,7 @@ misc/      - Miscellaneous utilities
 
 ## Dependencies
 
-All scripts require Python 3.14+ with the following core dependencies:
+The project requires Python 3.10+ with the following core dependencies:
 - **biopython** - Sequence manipulation and analysis
 - **matplotlib** - All visualization scripts
 - **opencv-python** - Image processing (pheno module)
